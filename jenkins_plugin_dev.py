@@ -109,7 +109,8 @@ class jenkins_plugin_dev(ShutItModule):
 </settings>''')
 		group_id = 'tk.shutit'
 		artifact_id = 'shutit_docker'
-		shutit.multisend('mvn -U org.jenkins-ci.tools:maven-hpi-plugin:create',{'groupId':group_id,'artifactId':artifact_id}
+		shutit.multisend('mvn -U org.jenkins-ci.tools:maven-hpi-plugin:create',{'groupId':group_id,'artifactId':artifact_id})
+		shutit.send('cd ' + artifact_id)
 		shutit.send('mvn package')
 		shutit.pause_point('')
 		return True
