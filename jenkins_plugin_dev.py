@@ -73,6 +73,7 @@ class jenkins_plugin_dev(ShutItModule):
 		# shutit.fail(msg)                   - Fail the program and exit with status 1
 		# 
 		shutit.install('maven default-jdk')
+		shutit.send('''mkdir /root/.m2''')
 		shutit.send_file('''/root/.m2/settings.xml''','''<settings>
   <pluginGroups>
     <pluginGroup>org.jenkins-ci.tools</pluginGroup>
@@ -112,7 +113,7 @@ class jenkins_plugin_dev(ShutItModule):
 		shutit.multisend('mvn -U org.jenkins-ci.tools:maven-hpi-plugin:create',{'groupId':group_id,'artifactId':artifact_id})
 		shutit.send('cd ' + artifact_id)
 		shutit.send('mvn package')
-		shutit.pause_point('')
+		shutit.get_file('/root/' + artifact_id + '/target/' + artifact_id + '.hpi',artifact_id + '.hpi')
 		return True
 
 	def get_config(self, shutit):
